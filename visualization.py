@@ -31,6 +31,8 @@ def projection(U, V):
     repreV = (lowdimV - np.mean(lowdimV, axis=0)) / np.std(lowdimV, axis=0)
     return repreU, repreV
 
+def kde_visualize(repreU, repreV, Y, movie_ID):
+
 def visualize(U, V):
     # Read data
     with open("./data/data.txt") as f:
@@ -69,6 +71,9 @@ def visualize(U, V):
     repreU, repreV = projection(U, V)
     metadf['x'] = pd.Series(repreV[:, 0], index=metadf.index)
     metadf['y'] = pd.Series(repreV[:, 1], index=metadf.index)
+
+    # Visualize audience for movies
+    kde_visualize(repreU, repreV, Y, [222, 228, 59, 60, 61, 185, 127, 616, 542, 553])
 
     # Visualize different genre
     genre_vec = []
