@@ -19,10 +19,20 @@ def main():
     eta = 0.03 # learning rate
     E_in = []
     E_out = []
-
+    
+    #normalize / -mean
+    Ylen = Y_train.shape[0]
+    ind = list(range(Ylen))
+    Ymean = np.mean(Y_train[:, 2])
+    for t in ind:
+        Y_train[t][2] = Y_train[t][2]-Ymean
+    for t in list(range(Y_test.shape[0])):
+        Y_test[t][2] = Y_test[t][2]-Ymean
+    print(Ymean)
+    
     # Use to compute Ein and Eout
     for K in Ks:
-        U,V,A,B,err = train_model(M, N, K, eta, reg, Y_train,max_epochs=2)
+        U,V,A,B,err = train_model(M, N, K, eta, reg, Y_train,max_epochs=5)
         E_in.append(err)
         E_out.append(get_err(U, V, Y_test, A, B ))
 
