@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-from utils_5A import train_model, get_err
+from utils_5B import train_model, get_err
 
 def main():
     Y_train = np.loadtxt('data/train.txt').astype(int)
@@ -32,7 +32,7 @@ def main():
     sns.set()
     ax = sns.heatmap(data,cmap="YlGnBu",annot=True,fmt='.2g')
     fig = ax.get_figure()
-    fig.savefig('heatmap_5A.png')
+    fig.savefig('heatmap_5B.png')
 
 if __name__ == "__main__":
     main()
