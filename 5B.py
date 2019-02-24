@@ -39,15 +39,3 @@ if best_reg == -1 and best_eta == -1:
     fig.savefig('heatmap_5B.png')
 
 U, V, A, B, err = train_model(M, N, K, best_eta, best_reg, Y_train)
-normV = V - np.mean(V, axis=0)
-
-U = U.transpose()
-normV = normV.transpose()
-
-u, s, vh = np.linalg.svd(normV)
-proj = u[:, :2]
-lowdimU = np.matmul(proj.transpose(), U).transpose()
-lowdimV = np.matmul(proj.transpose(), normV).transpose()
-
-repreU = (lowdimU - np.mean(lowdimU, axis=0)) / np.std(lowdimU, axis=0)
-repreV = (lowdimV - np.mean(lowdimV, axis=0)) / np.std(lowdimV, axis=0)
