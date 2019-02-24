@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import collections
 
 sns.set(style="darkgrid", font_scale=1.4)
 
@@ -32,6 +33,22 @@ def projection(U, V):
     return repreU, repreV
 
 def kde_visualize(repreU, repreV, Y, movie_ID):
+    movie_ID = set(movie_ID)
+    data = collections.defualtdict(list)
+    for item in Y:
+        if item[1] in movie_ID:
+            data[item[1]].append(item[0])
+    plt.figure()
+    for movie,users in data.items():
+        y,x = [],[]
+        for u in users:
+            y.append(repreU[u][0])
+            x.append(repreU[u][1])
+        sns_plot = sns.kdeplot(x, y)#cmap="Reds", shade=True, shade_lowest=False)
+    fig = sns_plot.get_figure()
+    fig.savefig("kde.png")
+    plt.close()
+    return
 
 def visualize(U, V):
     # Read data
