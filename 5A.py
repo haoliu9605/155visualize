@@ -17,8 +17,8 @@ def main():
 	
     reg = [0.00001, 0.0001, 0.001, 0.1,1]
     eps = [0.00001,0.0001,0.001,0.1,1]
-    reg = [0.1,1]
-    eps = [0.1,1]
+    #reg = [0.1,1]
+    #eps = [0.1,1]
     eta = 0.03 # learning rate
     E_out = np.zeros((len(reg),len(eps)))
     # Use to compute Ein and Eout
