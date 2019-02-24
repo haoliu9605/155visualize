@@ -49,11 +49,11 @@ def get_err(U, V, Y,A,B, reg=0.0):
     Returns the mean regularized squared-error of predictions made by
     estimating Y_{ij} as the dot product of the ith row of U and the jth column of V^T.
     """
-    fir = 0.5*reg*(np.linalg.norm(U,'fro')+np.linalg.norm(V,'fro')+ np.linalg.norm(A,'fro') +  np.linalg.norm(B,'fro') )
+    fir = 0.5*reg*(np.linalg.norm(U,'fro') + np.linalg.norm(V,'fro') + np.linalg.norm(A,'fro') + np.linalg.norm(B,'fro') )
     sec = 0
     for ind in range(len(Y)):
         i,j,y_ij = Y[ind][0]-1,Y[ind][1]-1,Y[ind][2]
-        sec = sec + (y_ij - (np.dot(U[i],V[j])+A[i] +B[j]  )        )**2
+        sec = sec + (y_ij - (np.dot(U[i],V[j])+A[i] +B[j] ) )**2
     return (fir + 0.5*sec)/len(Y)
 
 
@@ -78,9 +78,6 @@ def train_model(M, N, K, eta, reg, Y, eps=0.0001, max_epochs=300):
     V = np.random.uniform(-0.5, 0.5, (N, K))
     A = np.random.uniform(-0.5, 0.5, (M, 1)) # bias term for each user
     B = np.random.uniform(-0.5, 0.5, (N, 1)) # bias term for each movie
-
-    
-
 
     ep = 1
     prev_err = get_err(U,V,Y,A,B,reg)

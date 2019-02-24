@@ -53,7 +53,7 @@ def get_err(U, V, Y,A,B, reg=0.0):
     sec = 0
     for ind in range(len(Y)):
         i,j,y_ij = Y[ind][0]-1,Y[ind][1]-1,Y[ind][2]
-        sec = sec + (y_ij - (np.dot(U[i],V[j])+A[i] +B[j]  )        )**2
+        sec = sec + (y_ij - (np.dot(U[i],V[j]) + A[i] + B[j]))**2
     return (fir + 0.5*sec)/len(Y)
 
 
@@ -107,4 +107,4 @@ def train_model(M, N, K, eta, reg, Y, eps=0.0001, max_epochs=300):
                 break
         prev_err = curr_err
         ep += 1
-    return U,V,A,B,curr_err
+    return U, V, A, B, curr_err

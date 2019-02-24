@@ -65,13 +65,13 @@ def train_model(M, N, K, eta, reg, Y, eps=0.0001, max_epochs=300):
     U = np.random.uniform(-0.5, 0.5, (M, K))
     V = np.random.uniform(-0.5, 0.5, (N, K))
     ep = 1
-    
+
     prev_err = get_err(U,V,Y,reg)
     init_delta = 0
     curr_err = 0
     while ep <= max_epochs:
         #permute the data
-        
+
         iter_ind = np.random.permutation(Y.shape[0])
         #gradient descend for each point
         for ind in iter_ind:
@@ -90,5 +90,3 @@ def train_model(M, N, K, eta, reg, Y, eps=0.0001, max_epochs=300):
         prev_err = curr_err
         ep += 1
     return U,V,curr_err
-            
-        

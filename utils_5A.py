@@ -45,7 +45,7 @@ def get_err(U, V, Y, reg=0.0):
     return (fir + 0.5*sec)/len(Y)
 
 
-def train_model(M, N, K, eta, reg, Y, eps, max_epochs=300):
+def train_model(M, N, K, eta, reg, Y, eps=0.0001, max_epochs=300):
     """
     Given a training data matrix Y containing rows (i, j, Y_ij)
     where Y_ij is user i's rating on movie j, learns an
@@ -65,22 +65,22 @@ def train_model(M, N, K, eta, reg, Y, eps, max_epochs=300):
     U = np.random.uniform(-0.5, 0.5, (M, K))
     V = np.random.uniform(-0.5, 0.5, (N, K))
     ep = 1
-    
+
     prev_err = get_err(U,V,Y,reg)
     init_delta = 0
     curr_err = 0
     while ep <= max_epochs:
         #permute the data
-        
+
         iter_ind = np.random.permutation(Y.shape[0])
         #gradient descend for each point
         for ind in iter_ind:
-            i,j,y_ij = Y[ind][0]-1,Y[ind][1]-1,Y[ind][2]
-            gu = grad_U(U[i],y_ij,V[j],reg,eta)
-            gv = grad_V(V[j],y_ij,U[i],reg,eta)
+            i, j, y_ij = Y[ind][0]-1, Y[ind][1]-1, Y[ind][2]
+            gu = grad_U(U[i], y_ij, V[j], reg, eta)
+            gv = grad_V(V[j], y_ij, U[i], reg, eta)
             U[i] = U[i] - gu
             V[j] = V[j] - gv
-        curr_err = get_err(U,V,Y,reg)
+        curr_err = get_err(U, V, Y, reg)
         print('@'+str(ep)+':'+str(curr_err))
         if ep == 1:
             init_delta = curr_err - prev_err
@@ -90,5 +90,3 @@ def train_model(M, N, K, eta, reg, Y, eps, max_epochs=300):
         prev_err = curr_err
         ep += 1
     return U,V,curr_err
-            
-        
