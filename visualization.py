@@ -33,21 +33,33 @@ def projection(U, V):
     repreV = (lowdimV - np.mean(lowdimV, axis=0)) / np.std(lowdimV, axis=0)
     return repreU, repreV
 
-def kde_visualize(repreU, repreV, Y, movie_ID):
-    movie_ID = set(movie_ID)
-    data = collections.defualtdict(list)
+def kde_visualize(U, V, Y, movie_ID,metadf):
+    movie_ID = set(movie_ID[:9])
+    data = collections.defaultdict(list)
     for item in Y:
         if item[1] in movie_ID:
             data[item[1]].append(item[0])
-    plt.figure()
+    f = plt.figure(figsize=(15, 15))
+    #plt.axis('off')
+    i = 1
     for movie,users in data.items():
         y,x = [],[]
         for u in users:
-            y.append(repreU[u][0])
-            x.append(repreU[u][1])
-        sns_plot = sns.kdeplot(x, y)#cmap="Reds", shade=True, shade_lowest=False)
-    fig = sns_plot.get_figure()
-    fig.savefig("kde.png")
+            x.append(U[u-1][0])
+            y.append(U[u-1][1])
+        f.add_subplot(3,3,i,xlim = (-3,3), ylim = (-3,3))
+        sns.kdeplot(x, y, cmap="Blues", shade=True, shade_lowest=False)
+        plt.scatter(V[movie-1][0], V[movie-1][1], marker='o', s=100,color='orange')
+        plt.tick_params(labelsize=15)
+        plt.xlabel('x1',size = 20)
+        plt.ylabel('x2',size = 20)
+        #plt.ylim((-3, 3))
+        #plt.xlim((-3, 3))
+        plt.title(str(metadf["movie title"].iloc[movie-1]),fontsize=20)
+
+        i += 1
+    plt.tight_layout()
+    plt.savefig('kde.png')
     plt.close()
     return
 
