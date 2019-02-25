@@ -2,8 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from matplotlib.colors import LinearSegmentedColormap
 
-sns.set(style="darkgrid", font_scale=1.4)
+sns.set(style="darkgrid", font_scale=1.0)
 
 def projection(U, V):
     """
@@ -81,6 +82,7 @@ def visualize(U, V):
     for genre in all_genre:
         all_movie_in_genre = metadf[metadf[genre] == True]
         mean_v = np.mean(all_movie_in_genre['lat_vec'].values)
+        print(genre, np.mean(all_movie_in_genre['x'].values), np.mean(all_movie_in_genre['y'].values))
         genre_vec.append(mean_v)
     _, genre_vec = projection(None, np.array(genre_vec))
     genre_df = pd.DataFrame(data=genre_vec, columns=["x", "y"])
@@ -92,6 +94,33 @@ def visualize(U, V):
     fig = sns_plot.get_figure()
     fig.savefig("all_scatter_genre.png")
     plt.close()
+
+    # Visualize genre movies
+    sns.set(style="ticks", color_codes=True)
+    plt.figure()
+    selected_genre = ["Film-Noir", "Children\'s", "Musical"]
+    colors = ["Blues", "Reds", "Greens"]
+    movie_in_genre = metadf[(metadf["Musical"] == True) | (metadf["Film-Noir"] == True) | (metadf["Children\'s"] == True)]
+    g = sns.JointGrid(x="x", y="y", data=movie_in_genre)
+    for genre, color in zip(selected_genre, colors):
+        all_movie_in_genre = metadf[metadf[genre] == True]
+        #sns_plot = sns.scatterplot(x='x', y='y', data=all_movie_in_genre, label=genre)
+        x_list, y_list = [], []
+        for i in range(len(all_movie_in_genre)):
+            x_list.append(all_movie_in_genre['x'].iloc[i])
+            y_list.append(all_movie_in_genre['y'].iloc[i])
+        custom_color_map = LinearSegmentedColormap.from_list(
+            name='custom',
+            colors=[color[0]]*10,
+        )
+        sns_plot = sns.kdeplot(x_list, y_list, label=genre, n_levels=7, shade=False, shade_lowest=False, cut=2, ax=g.ax_joint, cmap=custom_color_map, alpha=0.7)
+        sns.distplot(x_list, kde=True, hist=False, color=color[0], ax=g.ax_marg_x, kde_kws={"shade":True})
+        sns.distplot(y_list, kde=True, hist=False, color=color[0], ax=g.ax_marg_y, vertical=True, kde_kws={"shade":True})
+    fig = sns_plot.get_figure()
+    sns_plot.legend()
+    fig.savefig("all_scatter_selected_genre.png")
+    plt.close()
+    sns.set(style="darkgrid", font_scale=1.0)
 
     # Visualize selected movie
     some_movie = [222, 228, 59, 60, 61, 185, 127, 616, 542, 553]
