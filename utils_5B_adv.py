@@ -53,6 +53,8 @@ def get_err(U, V, Y,A,B, reg=0.0):
     sec = 0
     for ind in range(len(Y)):
         i,j,y_ij = Y[ind][0]-1,Y[ind][1]-1,Y[ind][2]
+        i = int(i)
+        j = int(j)
         sec = sec + (y_ij - (np.dot(U[i],V[j])+A[i] +B[j] ) )**2
     return (fir + 0.5*sec)/len(Y)
 
@@ -90,6 +92,8 @@ def train_model(M, N, K, eta, reg, Y, eps=0.0001, max_epochs=300):
         #gradient descend for each point
         for ind in iter_ind:
             i,j,y_ij = Y[ind][0]-1,Y[ind][1]-1,Y[ind][2]
+            i =int(i)
+            j = int(j)
             gu = grad_U(U[i],y_ij,V[j],A[i], B[j], reg,eta)
             gv = grad_V(V[j],y_ij,U[i],A[i], B[j], reg,eta)
             ga = grad_A(V[j],y_ij,U[i],A[i], B[j], reg,eta)

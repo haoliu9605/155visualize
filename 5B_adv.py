@@ -7,8 +7,8 @@ from utils_5B_adv import train_model, get_err
 best_reg = 0.1
 best_eta = 0.015
 
-Y_train = np.loadtxt('data/train.txt').astype(int)
-Y_test = np.loadtxt('data/test.txt').astype(int)
+Y_train = np.loadtxt('data/train.txt').astype(float)
+Y_test = np.loadtxt('data/test.txt').astype(float)
 
 M = max(max(Y_train[:,0]), max(Y_test[:,0])).astype(int) # users
 N = max(max(Y_train[:,1]), max(Y_test[:,1])).astype(int) # movies
