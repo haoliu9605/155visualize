@@ -39,3 +39,4 @@ if best_reg == -1 and best_eta == -1:
     fig.savefig('heatmap_5B.png')
 
 U, V, A, B, err = train_model(M, N, K, best_eta, best_reg, Y_train)
+print(get_err(U, V, Y_test, A, B))
