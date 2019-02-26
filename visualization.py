@@ -103,7 +103,7 @@ def visualize(U, V):
     metadf['y'] = pd.Series(repreV[:, 1], index=metadf.index)
 
     # Visualize audience for movies
-    kde_visualize(repreU, repreV, Y, [222, 228, 59, 60, 61, 185, 127, 616, 542, 553])
+    kde_visualize(repreU, repreV, Y, [222, 228, 59, 60, 61, 185, 127, 616, 542, 553], metadf)
 
     # Visualize different genre
     genre_vec = []
