@@ -65,7 +65,7 @@ def kde_visualize(U, V, Y, movie_ID, metadf, name):
 
 
 def rend_sam_movie_ingenre():
-    movie = np.loadtxt('data/movies.txt').astype('string')
+    #movie = np.loadtxt('data/movies.txt').astype('string')
 
     with open("./data/movies.txt", encoding="mac_roman") as f:
         metadata = []
@@ -99,12 +99,21 @@ def rend_sam_movie_ingenre():
     sel_ind1 = ind1[np.random.permutation(len(ind1))[:10]]
     sel_ind2 = ind2[np.random.permutation(len(ind2))[:10]]
     sel_ind3 = ind3[np.random.permutation(len(ind3))[:10]]
+    for i in range(len(sel_ind1)):
+        sel_ind1[i] += 1
+    for i in range(len(sel_ind2)):
+        sel_ind2[i] += 1
+    for i in range(len(sel_ind3)):
+        sel_ind3[i] += 1
+    print("selected film noir ")
     for i in sel_ind1:
-        print(mv_name[i])
+        print(mv_name[i-1])
+    print("selected children ")
     for i in sel_ind2:
-        print(mv_name[i])
+        print(mv_name[i-1])
+    print("selected musical ")
     for i in sel_ind3:
-        print(mv_name[i])
+        print(mv_name[i-1])
     return sel_ind1, sel_ind2, sel_ind3
 
 def visualize(U, V, dirname):
@@ -194,6 +203,54 @@ def visualize(U, V, dirname):
     fig.savefig(dirname + "/all_scatter_selected_genre.png")
     plt.close()
     sns.set(style="darkgrid", font_scale=1.0)
+
+    #  Visualize random sampling movie in three genres
+    sel_ind1, sel_ind2, sel_ind3 = rend_sam_movie_ingenre()
+    # genre1
+    some_movie = sel_ind1
+    metadf['selected'] = pd.Series([id in some_movie for id in metadf['movie ID']], index=metadf.index)
+    some_movie = metadf[metadf['selected']==True]
+    print(some_movie)
+
+    plt.figure()
+    sns_plot = sns.scatterplot(x='x', y='y', data=some_movie, s=40)
+    for i, txt in enumerate(some_movie['movie title']):
+        name = txt.strip("\"")[:-7].strip(" ")
+        print(name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
+        sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
+    fig = sns_plot.get_figure()
+    fig.savefig(dirname + "/rand_selected_genre1.png")
+    plt.close()
+    # genre2
+    some_movie = sel_ind2
+    metadf['selected'] = pd.Series([id in some_movie for id in metadf['movie ID']], index=metadf.index)
+    some_movie = metadf[metadf['selected']==True]
+    print(some_movie)
+
+    plt.figure()
+    sns_plot = sns.scatterplot(x='x', y='y', data=some_movie, s=40)
+    for i, txt in enumerate(some_movie['movie title']):
+        name = txt.strip("\"")[:-7].strip(" ")
+        print(name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
+        sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
+    fig = sns_plot.get_figure()
+    fig.savefig(dirname + "/rand_selected_genre2.png")
+    plt.close()
+    # genre3
+    some_movie = sel_ind3
+    metadf['selected'] = pd.Series([id in some_movie for id in metadf['movie ID']], index=metadf.index)
+    some_movie = metadf[metadf['selected']==True]
+    print(some_movie)
+
+    plt.figure()
+    sns_plot = sns.scatterplot(x='x', y='y', data=some_movie, s=40)
+    for i, txt in enumerate(some_movie['movie title']):
+        name = txt.strip("\"")[:-7].strip(" ")
+        print(name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
+        sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
+    fig = sns_plot.get_figure()
+    fig.savefig(dirname + "/rand_selected_genre3.png")
+    plt.close()
 
     # Visualize selected movie
     some_movie = [222, 228, 59, 60, 61, 185, 127, 616, 542, 553]
