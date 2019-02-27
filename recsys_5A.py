@@ -41,6 +41,6 @@ def getUV():
 
 
     U, V, err = train_model(M, N, K, best_eta, best_reg, Y_train)
-    print(get_err(U, V, Y_test, A, B))
+    print(get_err(U, V, Y_test))
 
     return U, V
