@@ -34,7 +34,6 @@ def projection(U, V):
     return repreU, repreV
 
 def kde_visualize(U, V, Y, movie_ID, metadf, name):
-    movie_ID = set(movie_ID[:9])
     data = collections.defaultdict(list)
     for item in Y:
         if item[1] in movie_ID and item[2] >= 4:
@@ -42,7 +41,8 @@ def kde_visualize(U, V, Y, movie_ID, metadf, name):
     f = plt.figure(figsize=(15, 15))
     #plt.axis('off')
     i = 1
-    for movie,users in data.items():
+    for movie in movie_ID:
+        users = data[movie]
         y,x = [],[]
         for u in users:
             x.append(U[u-1][0])
@@ -147,7 +147,7 @@ def visualize(U, V, dirname):
     metadf['y'] = pd.Series(repreV[:, 1], index=metadf.index)
 
     # Visualize audience for movies
-    kde_visualize(repreU, repreV, Y, [222, 127, 542, 59, 60, 61, 185, 616, 228], metadf, dirname)
+    kde_visualize(repreU, repreV, Y, [222, 228, 542, 59, 60, 61, 185, 616, 127], metadf, dirname)
 
     # Visualize different genre
     genre_vec = []
