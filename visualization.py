@@ -196,7 +196,7 @@ def visualize(U, V, dirname):
     sns.set(style="darkgrid", font_scale=1.0)
 
     # Visualize selected movie
-    some_movie = [222, 228, 59, 60, 61, 185, 127, 616, 542, 553]
+    some_movie = [222, 127, 542, 59, 60, 61, 185, 616, 228]
     metadf['selected'] = pd.Series([id in some_movie for id in metadf['movie ID']], index=metadf.index)
     some_movie = metadf[metadf['selected']==True]
     print(some_movie)
