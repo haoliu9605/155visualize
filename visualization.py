@@ -172,7 +172,12 @@ def visualize(U, V, dirname):
     plt.figure()
     sns_plot = sns.scatterplot(x='x', y='y', data=genre_df, s=30)
     for i, txt in enumerate(all_genre):
-        sns_plot.annotate(txt, (genre_df['x'].iloc[i], genre_df['y'].iloc[i]))
+        #print(txt," i ",i)
+        if i == 6:
+            sns_plot.annotate(txt, (genre_df['x'].iloc[i]-1.0, genre_df['y'].iloc[i]))
+
+        else:
+            sns_plot.annotate(txt, (genre_df['x'].iloc[i], genre_df['y'].iloc[i]))
     fig = sns_plot.get_figure()
     fig.savefig(dirname + "/all_scatter_genre.png")
     plt.close()
@@ -262,8 +267,15 @@ def visualize(U, V, dirname):
     sns_plot = sns.scatterplot(x='x', y='y', data=some_movie, s=40)
     for i, txt in enumerate(some_movie['movie title']):
         name = txt.strip("\"")[:-7].strip(" ")
-        print(name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
-        sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
+        print(i, ' present i ',name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
+        if i == 1:
+            sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35)-0.1, some_movie['y'].iloc[i]-0.2))
+        elif i == 6:
+            sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.03))
+        elif i == 8:
+            sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35)-0.3, some_movie['y'].iloc[i]+0.04))
+        else:
+            sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
     fig = sns_plot.get_figure()
     fig.savefig(dirname + "/all_scatter_selected.png")
     plt.close()
@@ -278,7 +290,13 @@ def visualize(U, V, dirname):
     plt.figure()
     sns_plot = sns.scatterplot(x='x', y='y', data=popular_movie, s=40)
     for i, txt in enumerate(popular_movie['movie title']):
-        sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i], popular_movie['y'].iloc[i]+0.03))
+        #print(txt, ' present i ', i)
+        if i == 8:
+            sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i]-0.25, popular_movie['y'].iloc[i]+0.03))
+        elif i == 3:
+            sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i]-0.85, popular_movie['y'].iloc[i]-0.13))
+        else:
+            sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i], popular_movie['y'].iloc[i]+0.03))
     fig = sns_plot.get_figure()
     fig.savefig(dirname + "/all_scatter_popular.png")
     plt.close()
@@ -294,7 +312,17 @@ def visualize(U, V, dirname):
     plt.figure()
     sns_plot = sns.scatterplot(x='x', y='y', data=best_movie, s=40)
     for i, txt in enumerate(best_movie['movie title']):
-        sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i], best_movie['y'].iloc[i]+0.03))
+        #print(txt, ' present i ', i)
+        if i == 1:
+            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i]-0.1, best_movie['y'].iloc[i]+0.03))
+        elif i == 2:
+            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i]-0.4, best_movie['y'].iloc[i]+0.03))
+        elif i == 3:
+            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i], best_movie['y'].iloc[i]-0.1))
+        elif i == 5:
+            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i]-0.2, best_movie['y'].iloc[i]+0.03))
+        else:
+            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i], best_movie['y'].iloc[i]+0.03))
     fig = sns_plot.get_figure()
     fig.savefig(dirname + "/all_scatter_best.png")
     plt.close()
