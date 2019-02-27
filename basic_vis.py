@@ -119,3 +119,18 @@ musical_Y = pdY[[(x-1 in musical_movie) for x in pdY["movie ID"]]]
 sns_plot = sns.countplot(musical_Y["rating"], palette="coolwarm", order=[1, 2, 3, 4, 5])
 fig = sns_plot.get_figure()
 fig.savefig("musical_movie_rating.png")
+
+
+plt.figure()
+musical_movie = set([id for id in range(1682) if metadata[id][6] == 1])
+musical_Y = pdY[[(x-1 in musical_movie) for x in pdY["movie ID"]]]
+sns_plot = sns.countplot(musical_Y["rating"], palette="coolwarm", order=[1, 2, 3, 4, 5])
+fig = sns_plot.get_figure()
+fig.savefig("children_movie_rating.png")
+
+plt.figure()
+musical_movie = set([id for id in range(1682) if metadata[id][12] == 1])
+musical_Y = pdY[[(x-1 in musical_movie) for x in pdY["movie ID"]]]
+sns_plot = sns.countplot(musical_Y["rating"], palette="coolwarm", order=[1, 2, 3, 4, 5])
+fig = sns_plot.get_figure()
+fig.savefig("film_noir_movie_rating.png")

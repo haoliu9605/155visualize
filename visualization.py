@@ -33,11 +33,11 @@ def projection(U, V):
     repreV = (lowdimV - np.mean(lowdimV, axis=0)) / np.std(lowdimV, axis=0)
     return repreU, repreV
 
-def kde_visualize(U, V, Y, movie_ID,metadf):
+def kde_visualize(U, V, Y, movie_ID, metadf, name):
     movie_ID = set(movie_ID[:9])
     data = collections.defaultdict(list)
     for item in Y:
-        if item[1] in movie_ID:
+        if item[1] in movie_ID and item[2] >= 4:
             data[item[1]].append(item[0])
     f = plt.figure(figsize=(15, 15))
     #plt.axis('off')
@@ -59,11 +59,11 @@ def kde_visualize(U, V, Y, movie_ID,metadf):
 
         i += 1
     plt.tight_layout()
-    plt.savefig('kde.png')
+    plt.savefig(name + '/kde.png')
     plt.close()
     return
 
-def visualize(U, V):
+def visualize(U, V, dirname):
     # Read data
     with open("./data/data.txt") as f:
         Y = []
@@ -103,7 +103,7 @@ def visualize(U, V):
     metadf['y'] = pd.Series(repreV[:, 1], index=metadf.index)
 
     # Visualize audience for movies
-    kde_visualize(repreU, repreV, Y, [222, 228, 59, 60, 61, 185, 127, 616, 542, 553], metadf)
+    kde_visualize(repreU, repreV, Y, [222, 228, 59, 60, 61, 185, 127, 616, 542, 553], metadf, dirname)
 
     # Visualize different genre
     genre_vec = []
@@ -121,7 +121,7 @@ def visualize(U, V):
     for i, txt in enumerate(all_genre):
         sns_plot.annotate(txt, (genre_df['x'].iloc[i], genre_df['y'].iloc[i]))
     fig = sns_plot.get_figure()
-    fig.savefig("all_scatter_genre.png")
+    fig.savefig(dirname + "/all_scatter_genre.png")
     plt.close()
 
     # Visualize genre movies
@@ -147,7 +147,7 @@ def visualize(U, V):
         sns.distplot(y_list, kde=True, hist=False, color=color[0], ax=g.ax_marg_y, vertical=True, kde_kws={"shade":True})
     fig = sns_plot.get_figure()
     sns_plot.legend()
-    fig.savefig("all_scatter_selected_genre.png")
+    fig.savefig(dirname + "/all_scatter_selected_genre.png")
     plt.close()
     sns.set(style="darkgrid", font_scale=1.0)
 
@@ -164,7 +164,7 @@ def visualize(U, V):
         print(name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
         sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
     fig = sns_plot.get_figure()
-    fig.savefig("all_scatter_selected.png")
+    fig.savefig(dirname + "/all_scatter_selected.png")
     plt.close()
 
     # Visualize popular movie
@@ -179,7 +179,7 @@ def visualize(U, V):
     for i, txt in enumerate(popular_movie['movie title']):
         sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i], popular_movie['y'].iloc[i]+0.03))
     fig = sns_plot.get_figure()
-    fig.savefig("all_scatter_popular.png")
+    fig.savefig(dirname + "/all_scatter_popular.png")
     plt.close()
 
     # Visualize best movie
@@ -195,5 +195,5 @@ def visualize(U, V):
     for i, txt in enumerate(best_movie['movie title']):
         sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i], best_movie['y'].iloc[i]+0.03))
     fig = sns_plot.get_figure()
-    fig.savefig("all_scatter_best.png")
+    fig.savefig(dirname + "/all_scatter_best.png")
     plt.close()
