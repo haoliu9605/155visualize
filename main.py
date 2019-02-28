@@ -1,8 +1,8 @@
 import basic_vis
-import visualization_A
-import visualization_B
-import visualization_B_adv
-import visualization_C
+import visualization_5A
+import visualization_5B
+import visualization_5B_adv
+import visualization_5C
 import recsys_5A
 import recsys_5B
 import recsys_5B_adv
@@ -20,16 +20,16 @@ U, V = recsys_5B.getUV()
 os.makedirs("recsys_5B",exist_ok = True)
 np.save('recsys_5B/U_B',U)
 np.save('recsys_5B/V_B',V)
-visualization_B.visualize(U, V, "recsys_5B")
+visualization_5B.visualize(U, V, "recsys_5B")
 
 U, V = recsys_5B_adv.getUV()
 os.makedirs("recsys_5B_adv",exist_ok = True)
 np.save('recsys_5B_adv/U_B_adv',U)
 np.save('recsys_5B_adv/V_B_adv',V)
-visualization_B_adv.visualize(U, V, "recsys_5B_adv")
+visualization_5B_adv.visualize(U, V, "recsys_5B_adv")
 
 U, V = recsys_5C.getUV()
 os.makedirs("recsys_5C",exist_ok = True)
 np.save('recsys_5C/U_C',U)
 np.save('recsys_5C/V_C',V)
-visualization_C.visualize(U, V, "recsys_5C")
+visualization_5C.visualize(U, V, "recsys_5C")
