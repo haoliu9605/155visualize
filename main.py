@@ -1,23 +1,35 @@
 import basic_vis
-from visualization import visualize
+import visualization_A
+import visualization_B
+import visualization_B_adv
+import visualization_C
 import recsys_5A
 import recsys_5B
 import recsys_5B_adv
 import recsys_5C
+import numpy as np
 import os
 
 U, V = recsys_5A.getUV()
-os.mkdir("recsys_5A")
-visualize(U, V, "recsys_5A")
+os.makedirs("recsys_5A",exist_ok = True)
+np.save('recsys_5A/U_A',U)
+np.save('recsys_5A/V_A',V)
+visualization_A.visualize(U, V, "recsys_5A")
 
 U, V = recsys_5B.getUV()
-os.mkdir("recsys_5B")
-visualize(U, V, "recsys_5B")
+os.makedirs("recsys_5B",exist_ok = True)
+np.save('recsys_5B/U_B',U)
+np.save('recsys_5B/V_B',V)
+visualization_B.visualize(U, V, "recsys_5B")
 
 U, V = recsys_5B_adv.getUV()
-os.mkdir("recsys_5B_adv")
-visualize(U, V, "recsys_5B_adv")
+os.makedirs("recsys_5B_adv",exist_ok = True)
+np.save('recsys_5B_adv/U_B_adv',U)
+np.save('recsys_5B_adv/V_B_adv',V)
+visualization_B_adv.visualize(U, V, "recsys_5B_adv")
 
 U, V = recsys_5C.getUV()
-os.mkdir("recsys_5C")
-visualize(U, V, "recsys_5C")
+os.makedirs("recsys_5C",exist_ok = True)
+np.save('recsys_5C/U_C',U)
+np.save('recsys_5C/V_C',V)
+visualization_C.visualize(U, V, "recsys_5C")
