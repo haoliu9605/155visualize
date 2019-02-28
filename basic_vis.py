@@ -76,12 +76,11 @@ fig = sns_plot.get_figure()
 fig.savefig("best_movie_rating.png")
 
 plt.figure()
-movie_rate = [x if movie_count[i] > 20 else 0 for i, x in enumerate(movie_rate)]
+movie_rate = [x if movie_count[i] > 50 else 0 for i, x in enumerate(movie_rate)]
 best_movie = np.argsort(movie_rate)[::-1]
 best_movie = best_movie[:10]
 best_Y = pdY[[(x-1 in best_movie) for x in pdY["movie ID"]]]
-sns_plot5 = sns.countplot(x="rating", hue="movie ID", data=best_Y, palette="coolwarm")
-plt.legend(loc="upper left", title="movie ID")
+sns_plot5 = sns.countplot(best_Y["rating"], palette="coolwarm", order=[1, 2, 3, 4, 5])
 fig = sns_plot5.get_figure()
 fig.savefig("best_movie_rating_thresh.png")
 
