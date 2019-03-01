@@ -96,6 +96,7 @@ def rend_sam_movie_ingenre():
     ind2 = np.where(feat_mat[:,4]==1)[0]   # children
     ind3 = np.where(feat_mat[:,12]==1)[0]  # musical
     # random select 10 films from each genre
+    np.random.seed(170)
     sel_ind1 = ind1[np.random.permutation(len(ind1))[:10]]
     sel_ind2 = ind2[np.random.permutation(len(ind2))[:10]]
     sel_ind3 = ind3[np.random.permutation(len(ind3))[:10]]
@@ -222,7 +223,7 @@ def visualize(U, V, dirname):
     for i, txt in enumerate(some_movie['movie title']):
         name = txt.strip("\"")[:-7].strip(" ")
         print(name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
-        sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
+        sns_plot.annotate(name, (some_movie['x'].iloc[i], some_movie['y'].iloc[i]+0.04))
     fig = sns_plot.get_figure()
     fig.savefig(dirname + "/rand_selected_genre1.png")
     plt.close()
@@ -252,7 +253,10 @@ def visualize(U, V, dirname):
     for i, txt in enumerate(some_movie['movie title']):
         name = txt.strip("\"")[:-7].strip(" ")
         print(name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
-        sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
+        if i == 7:
+            sns_plot.annotate(name, (some_movie['x'].iloc[i]-0.05, some_movie['y'].iloc[i]-0.05))
+        else:
+            sns_plot.annotate(name, (some_movie['x'].iloc[i]-0.05, some_movie['y'].iloc[i]+0.04))
     fig = sns_plot.get_figure()
     fig.savefig(dirname + "/rand_selected_genre3.png")
     plt.close()
@@ -270,10 +274,14 @@ def visualize(U, V, dirname):
         print(i, ' present i ',name, some_movie['x'].iloc[i], some_movie['y'].iloc[i])
         if i == 1:
             sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35)-0.1, some_movie['y'].iloc[i]-0.2))
+        elif i == 3:
+            sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]-0.2))
         elif i == 6:
             sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.03))
         elif i == 8:
-            sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35)-0.3, some_movie['y'].iloc[i]+0.04))
+            sns_plot.annotate(name, (some_movie['x'].iloc[i], some_movie['y'].iloc[i]))
+        elif i == 9:
+            sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35)+0.3, some_movie['y'].iloc[i]-0.04))
         else:
             sns_plot.annotate(name, (max(some_movie['x'].iloc[i] - len(name) * 0.028, -2.35), some_movie['y'].iloc[i]+0.04))
     fig = sns_plot.get_figure()
@@ -290,11 +298,11 @@ def visualize(U, V, dirname):
     plt.figure()
     sns_plot = sns.scatterplot(x='x', y='y', data=popular_movie, s=40)
     for i, txt in enumerate(popular_movie['movie title']):
-        #print(txt, ' present i ', i)
+        print(txt, ' present i ', i)
         if i == 8:
             sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i]-0.25, popular_movie['y'].iloc[i]+0.03))
         elif i == 3:
-            sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i]-0.85, popular_movie['y'].iloc[i]-0.13))
+            sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i], popular_movie['y'].iloc[i]))
         else:
             sns_plot.annotate(txt.strip("\"")[:-7], (popular_movie['x'].iloc[i], popular_movie['y'].iloc[i]+0.03))
     fig = sns_plot.get_figure()
@@ -312,13 +320,13 @@ def visualize(U, V, dirname):
     plt.figure()
     sns_plot = sns.scatterplot(x='x', y='y', data=best_movie, s=40)
     for i, txt in enumerate(best_movie['movie title']):
-        #print(txt, ' present i ', i)
+        print(txt, ' present i ', i)
         if i == 1:
             sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i]-0.1, best_movie['y'].iloc[i]+0.03))
         elif i == 2:
-            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i]-0.4, best_movie['y'].iloc[i]+0.03))
+            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i]-0.03, best_movie['y'].iloc[i]-0.1))
         elif i == 3:
-            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i], best_movie['y'].iloc[i]-0.1))
+            sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i]-0.9, best_movie['y'].iloc[i]))
         elif i == 5:
             sns_plot.annotate(txt.strip("\"")[:-7], (best_movie['x'].iloc[i]-0.2, best_movie['y'].iloc[i]+0.03))
         else:
