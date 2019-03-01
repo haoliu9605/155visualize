@@ -43,7 +43,7 @@ def getUV():
     '''
 
     # see performance on testset
-    algo1 = SVD(n_factors=20, n_epochs=20, lr_all=0.03, reg_all=0.1,verbose=True)
+    algo1 = SVD(n_factors=20, n_epochs=35, lr_all=0.03, reg_all=0.1,verbose=True)
     algo1.fit(trainset)
 
     predictions2 = algo1.test(train_perf)
